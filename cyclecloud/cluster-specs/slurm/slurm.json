@@ -21,14 +21,6 @@
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_slurm_nhc:default:1.0.0" : {
-      "Order" : 10100,
-      "Spec" : "default",
-      "Name" : "cc_slurm_nhc:default:1.0.0",
-      "Project" : "cc_slurm_nhc",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
     "cc_misc_ubuntu:default:1.0.0" : {
       "Order" : 10200,
       "Spec" : "default",
@@ -37,28 +29,12 @@
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
+    "cc_slurm_nhc:default:1.0.0" : {
       "Order" : 10300,
       "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
+      "Name" : "cc_slurm_nhc:default:1.0.0",
+      "Project" : "cc_slurm_nhc",
       "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
-    "cc_job_preempt:default:1.0.0" : {
-      "Order" : 10400,
-      "Spec" : "default",
-      "Name" : "cc_job_preempt:default:1.0.0",
-      "Project" : "cc_job_preempt",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
-    "cc_slurmrestd_ubuntu1804:default:1.0.0" : {
-      "Order" : 10600,
-      "Spec" : "default",
-      "Name" : "cc_slurmrestd_ubuntu1804:default:1.0.0",
-      "Project" : "cc_slurmrestd_ubuntu1804",
-      "Locker" : "iaislurm_cred-storage",
       "Version" : "1.0.0"
     }
   },
@@ -92,16 +68,8 @@
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
-      "Order" : 10200,
-      "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
     "cc_slurm_pyxis_enroot:default:1.0.0" : {
-      "Order" : 10400,
+      "Order" : 10200,
       "Spec" : "default",
       "Name" : "cc_slurm_pyxis_enroot:default:1.0.0",
       "Project" : "cc_slurm_pyxis_enroot",
@@ -111,44 +79,44 @@
   },
   "HPCImageName" : "microsoft-dsvm:ubuntu-hpc:1804:18.04.2021120101",
   "HPCMachineType" : "Standard_ND96amsr_A100_v4",
-  "MaxHPCExecuteCoreCount" : 1920,
+  "MaxHPCExecuteCoreCount" : 192,
   "HPCMaxScalesetSize" : 300,
   "HPCMemoryDampen": 8,
   "HPCClusterInitSpecs" : {
-    "cc_slurm_pyxis_enroot:default:1.0.0" : {
+    "cc_limits:default:1.0.0" : {
       "Order" : 10000,
+      "Spec" : "default",
+      "Name" : "cc_limits:default:1.0.0",
+      "Project" : "cc_limits",
+      "Locker" : "kanchan-storage",
+      "Version" : "1.0.0"
+    },
+    "cc_slurm_pyxis_enroot:default:1.0.0" : {
+      "Order" : 10100,
       "Spec" : "default",
       "Name" : "cc_slurm_pyxis_enroot:default:1.0.0",
       "Project" : "cc_slurm_pyxis_enroot",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_slurm_nhc:default:1.0.0" : {
-      "Order" : 10100,
-      "Spec" : "default",
-      "Name" : "cc_slurm_nhc:default:1.0.0",
-      "Project" : "cc_slurm_nhc",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
     "cc_misc_ndv4:default:1.0.0" : {
-      "Order" : 10200,
+      "Order" : 10300,
       "Spec" : "default",
       "Name" : "cc_misc_ndv4:default:1.0.0",
       "Project" : "cc_misc_ndv4",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
+    "cc_slurm_nhc:default:1.0.0" : {
       "Order" : 10300,
       "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
+      "Name" : "cc_slurm_nhc:default:1.0.0",
+      "Project" : "cc_slurm_nhc",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     }
   },
-  "NFSAddress" : "NOT-SET",
+  "NFSAddress" : null,
   "NFSType" : "Builtin",
   "NFSSharedExportPath" : "/shared",
   "NFSSharedMountOptions" : "rw,hard,rsize=262144,wsize=262144,nconnect=8,sec=sys,vers=4.1,tcp",

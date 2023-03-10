@@ -1,9 +1,8 @@
-
 ################################
 ## Cluster Configuration File ##
 ################################
 
-[cluster Slurm]
+[cluster slurm]
 FormLayout = selectionpanel
 Category = Schedulers
 
@@ -122,7 +121,7 @@ Autoscale = $Autoscale
         fs_type = xfs
 
         [[[configuration cyclecloud.exports.builtinsched]]]
-	    disabled = ${NFSSchedDisable}
+        disabled = ${NFSSchedDisable}
         export_path = /sched
         options = no_root_squash
         samba.enabled = false
@@ -278,6 +277,7 @@ Order = 10
         Required = True
 
     [[parameter ManagedServiceIdentity]]
+    Order = 50
     Label = MSI Identity
     ParameterType = Azure.ManagedIdentity
     Description = The resource ID of the Managed Service Identity to apply to the nodes

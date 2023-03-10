@@ -45,6 +45,14 @@
       "Locker" : "${cyclecloud_locker}",
       "Version" : "1.0.0"
     },
+    "cc_job_preempt:default:1.0.0" : {
+      "Order" : 10400,
+      "Spec" : "default",
+      "Name" : "cc_job_preempt:default:1.0.0",
+      "Project" : "cc_job_preempt",
+      "Locker" : "${cyclecloud_locker}",
+      "Version" : "1.0.0"
+    },
     "cc_slurmrestd_ubuntu1804:default:1.0.0" : {
       "Order" : 10600,
       "Spec" : "default",

@@ -31,7 +31,7 @@ Use of this repo requires the following:
 
 ### Deploy CycleCloud
 
-The deployment of CycleCloud is done using Terraform and is configured using environmental variables described `variables.tf`.  The variables without default values must be set and a template is provided in the file `.envrc.template` which can be modified and renamed to `.envrc` to be used with [direnv](https://direnv.net/), or manually sourced.
+The deployment of CycleCloud is done using Terraform and is configured using environmental variables described `variables.tf`.  The variables without default values must be set and a template is provided in the file `.envrc.template` which can be copied to to `.envrc` to be used with [direnv](https://direnv.net/), or manually sourced (i.e. `source .envrc`).  Note, `.envrc` is listed in the `.gitignore` file so it will not be accidentally committed.
 
 After the required environmental variables are set, the deployment can be done by running the following commands:
 
@@ -44,7 +44,7 @@ $ terraform apply plan.out
 This will provision:
 - A resource group
 - A virtual network and default subnet
-- A storage account and container configured to work with CycleCloud (no hierarchical namespace) and access to your local machine and the newly provisioned virtual network
+- A storage account and container configured to work with CycleCloud (without hierarchical namespace) and access to your local machine and the newly provisioned virtual network
 - A user managed identity with the role of `Contributor` on the resource group which will be assigned to compute nodes to allow them to access the storage account or other Azure resources
 - A VM with CycleCloud installed which will provide administrative access through a web browser and SSH
 
@@ -77,7 +77,7 @@ Then start the cluster by pressing the `Start` button on the `Cluster` page.  Yo
 ccadmin@cyclecloud-vm$ cyclecloud cluster start -c Slurm
 ```
 
-The scheduler node will take a few minutes to start.  The compute nodes will need to be manually started and can take up to 20 minutes to fully provision.
+The scheduler node will take a few minutes to start.  The compute nodes will need to be manually started by right-clicking the "hpc" labeled row under "Template" and selecting "Start" from the "Actions" pull-down menu.  Note that provisioning NDv$ VMs can take up to 20 minutes.
 
 
 ## Training a Language Language Model (OPT-175B, as an example)
