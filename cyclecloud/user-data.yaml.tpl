@@ -30,9 +30,13 @@ packages:
   - python3.8-venv
   # Will "install" (download package), but will not be operational.  See runcmd.
   - cyclecloud8
-  - azure-cli
+  # Needed for PMIx
+  - libevent-dev
 
 runcmd:
+  #
+  # Install CycleCloud
+  #
   # Manually install CycleCloud as it will fail during install due to Java 11 being installed as default
   - update-java-alternatives -s java-1.8.0-openjdk-amd64
   # Find temp install dir. I've found it to be 490f4cc0-d326-4f4b-b48e-26e6320f3acb, but including to avoid brittleness
@@ -55,6 +59,13 @@ runcmd:
   - cp /home/${cyclecloud_admin_name}/slurm/slurm-*.txt /opt/cycle_server/config/data
   # Import Slurm config to create cluster in CycleCloud
   - /usr/local/bin/cyclecloud import_cluster Slurm -f /home/${cyclecloud_admin_name}/slurm/slurm.txt -p /home/${cyclecloud_admin_name}/slurm/slurm.json --config /home/${cyclecloud_admin_name}/.cycle/config.ini
+  #
+  # Install PMIx - This specific version from Azure/azurehpc works with no issues
+  #
+  - mkdir -p /opt/pmix/v3
+  - wget https://raw.githubusercontent.com/Azure/azurehpc/master/experimental/deploy_cycle_slurm_ndv4/scripts/openpmix-3.1.6.tar.gz -O /opt/pmix/openpmix-3.1.6.tar.gz
+  - tar xzf /opt/pmix/openpmix-3.1.6.tar.gz --directory=/opt/pmix
+  - cd /opt/pmix/openpmix-3.1.6; ./autogen.sh; ./configure --prefix=/opt/pmix/v3; make -j install > /opt/pmix/openpmix-3.1.6._install.log
 
 
 write_files:

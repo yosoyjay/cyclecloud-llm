@@ -21,19 +21,19 @@
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
+    "cc_slurm_nhc:default:1.0.0" : {
+      "Order" : 10100,
+      "Spec" : "default",
+      "Name" : "cc_slurm_nhc:default:1.0.0",
+      "Project" : "cc_slurm_nhc",
+      "Locker" : "kanchan-storage",
+      "Version" : "1.0.0"
+    },
     "cc_misc_ubuntu:default:1.0.0" : {
       "Order" : 10200,
       "Spec" : "default",
       "Name" : "cc_misc_ubuntu:default:1.0.0",
       "Project" : "cc_misc_ubuntu",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
-    "cc_slurm_nhc:default:1.0.0" : {
-      "Order" : 10300,
-      "Spec" : "default",
-      "Name" : "cc_slurm_nhc:default:1.0.0",
-      "Project" : "cc_slurm_nhc",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     }
@@ -69,7 +69,7 @@
       "Version" : "1.0.0"
     },
     "cc_slurm_pyxis_enroot:default:1.0.0" : {
-      "Order" : 10200,
+      "Order" : 10400,
       "Spec" : "default",
       "Name" : "cc_slurm_pyxis_enroot:default:1.0.0",
       "Project" : "cc_slurm_pyxis_enroot",
@@ -79,39 +79,31 @@
   },
   "HPCImageName" : "microsoft-dsvm:ubuntu-hpc:1804:18.04.2021120101",
   "HPCMachineType" : "Standard_ND96amsr_A100_v4",
-  "MaxHPCExecuteCoreCount" : 192,
+  "MaxHPCExecuteCoreCount" : 1920,
   "HPCMaxScalesetSize" : 300,
   "HPCMemoryDampen": 8,
   "HPCClusterInitSpecs" : {
-    "cc_limits:default:1.0.0" : {
-      "Order" : 10000,
-      "Spec" : "default",
-      "Name" : "cc_limits:default:1.0.0",
-      "Project" : "cc_limits",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
     "cc_slurm_pyxis_enroot:default:1.0.0" : {
-      "Order" : 10100,
+      "Order" : 10000,
       "Spec" : "default",
       "Name" : "cc_slurm_pyxis_enroot:default:1.0.0",
       "Project" : "cc_slurm_pyxis_enroot",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     },
-    "cc_misc_ndv4:default:1.0.0" : {
-      "Order" : 10300,
-      "Spec" : "default",
-      "Name" : "cc_misc_ndv4:default:1.0.0",
-      "Project" : "cc_misc_ndv4",
-      "Locker" : "kanchan-storage",
-      "Version" : "1.0.0"
-    },
     "cc_slurm_nhc:default:1.0.0" : {
-      "Order" : 10300,
+      "Order" : 10100,
       "Spec" : "default",
       "Name" : "cc_slurm_nhc:default:1.0.0",
       "Project" : "cc_slurm_nhc",
+      "Locker" : "kanchan-storage",
+      "Version" : "1.0.0"
+    },
+    "cc_misc_ndv4:default:1.0.0" : {
+      "Order" : 10200,
+      "Spec" : "default",
+      "Name" : "cc_misc_ndv4:default:1.0.0",
+      "Project" : "cc_misc_ndv4",
       "Locker" : "kanchan-storage",
       "Version" : "1.0.0"
     }

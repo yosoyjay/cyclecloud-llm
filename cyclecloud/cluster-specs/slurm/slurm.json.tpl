@@ -36,30 +36,6 @@
       "Project" : "cc_misc_ubuntu",
       "Locker" : "${cyclecloud_locker}",
       "Version" : "1.0.0"
-    },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
-      "Order" : 10300,
-      "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
-      "Locker" : "${cyclecloud_locker}",
-      "Version" : "1.0.0"
-    },
-    "cc_job_preempt:default:1.0.0" : {
-      "Order" : 10400,
-      "Spec" : "default",
-      "Name" : "cc_job_preempt:default:1.0.0",
-      "Project" : "cc_job_preempt",
-      "Locker" : "${cyclecloud_locker}",
-      "Version" : "1.0.0"
-    },
-    "cc_slurmrestd_ubuntu1804:default:1.0.0" : {
-      "Order" : 10600,
-      "Spec" : "default",
-      "Name" : "cc_slurmrestd_ubuntu1804:default:1.0.0",
-      "Project" : "cc_slurmrestd_ubuntu1804",
-      "Locker" : "iaislurm_cred-storage",
-      "Version" : "1.0.0"
     }
   },
   "Autoscale" : false,
@@ -89,14 +65,6 @@
       "Spec" : "default",
       "Name" : "cc_misc_ubuntu:default:1.0.0",
       "Project" : "cc_misc_ubuntu",
-      "Locker" : "${cyclecloud_locker}",
-      "Version" : "1.0.0"
-    },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
-      "Order" : 10200,
-      "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
       "Locker" : "${cyclecloud_locker}",
       "Version" : "1.0.0"
     },
@@ -138,17 +106,9 @@
       "Project" : "cc_misc_ndv4",
       "Locker" : "${cyclecloud_locker}",
       "Version" : "1.0.0"
-    },
-    "cc_sunrpc_max_slots:default:1.0.0" : {
-      "Order" : 10300,
-      "Spec" : "default",
-      "Name" : "cc_sunrpc_max_slots:default:1.0.0",
-      "Project" : "cc_sunrpc_max_slots",
-      "Locker" : "${cyclecloud_locker}",
-      "Version" : "1.0.0"
     }
   },
-  "NFSAddress" : "NOT-SET",
+  "NFSAddress" : null,
   "NFSType" : "Builtin",
   "NFSSharedExportPath" : "/shared",
   "NFSSharedMountOptions" : "rw,hard,rsize=262144,wsize=262144,nconnect=8,sec=sys,vers=4.1,tcp",
