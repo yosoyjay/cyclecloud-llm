@@ -1,7 +1,7 @@
 {
   "Region" : "${location}",
   "Credentials" : "${subscription_id}",
-  "SubnetId" : "${subnet_id}",
+  "SubnetId" : "${resource_group_name}/${vnet_name}/${subnet_name}",
   "UsePublicNetwork" : "${use_public_network}",
   "ExecuteNodesPublic" : false,
   "EnableAccelNet": true,
@@ -79,8 +79,8 @@
   },
   "HPCImageName" : "microsoft-dsvm:ubuntu-hpc:1804:18.04.2021120101",
   "HPCMachineType" : "Standard_ND96amsr_A100_v4",
-  "MaxHPCExecuteCoreCount" : 1920,
-  "HPCMaxScalesetSize" : 300,
+  "MaxHPCExecuteCoreCount" : 192,
+  "HPCMaxScalesetSize" : 100,
   "HPCMemoryDampen": 8,
   "HPCClusterInitSpecs" : {
     "cc_slurm_pyxis_enroot:default:1.0.0" : {

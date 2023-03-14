@@ -1,11 +1,13 @@
 #!/bin/bash
-
+# Repair NVMe RAID
+set -o errexit
+set -o nounset
+set -o pipefail
 
 NVME_DISKS_NAME=`ls /dev/nvme*n1`
 NVME_DISKS=`ls -latr /dev/nvme*n1 | wc -l`
 
 echo "Number of NVMe Disks: $NVME_DISKS"
-
 
 while [  "$NVME_DISKS" != "8" ]
 do

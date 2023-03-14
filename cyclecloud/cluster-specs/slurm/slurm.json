@@ -1,7 +1,7 @@
 {
   "Region" : "southcentralus",
   "Credentials" : "kanchan",
-  "SubnetId" : "/subscriptions/f5a67d06-2d09-4090-91cc-e3298907a021/resourceGroups/jesse-cyclecloud/providers/Microsoft.Network/virtualNetworks/jesse-cyclecloud-vnet/subnets/jesse-cyclecloud-subnet",
+  "SubnetId" : "jesse-cyclecloud/jesse-cyclecloud-vnet/jesse-cyclecloud-subnet",
   "UsePublicNetwork" : "false",
   "ExecuteNodesPublic" : false,
   "EnableAccelNet": true,

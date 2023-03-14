@@ -3,12 +3,14 @@
 #
 resource "local_file" "slurm_config" {
   content = templatefile("cluster-specs/slurm/slurm.json.tpl", {
-    location           = azurerm_resource_group.rg.location
-    subscription_id    = var.cyclecloud_subscription_name
-    subnet_id          = azurerm_subnet.subnet.id
-    use_public_network = var.use_public_network
-    managed_service_id = azurerm_user_assigned_identity.cyclecloud_node.id
-    vm_image           = var.cyclecloud_vm_image
+    location            = azurerm_resource_group.rg.location
+    subscription_id     = var.cyclecloud_subscription_name
+    resource_group_name = azurerm_resource_group.rg.name
+    vnet_name           = azurerm_virtual_network.vnet.name
+    subnet_name         = azurerm_subnet.subnet.name
+    use_public_network  = var.use_public_network
+    managed_service_id  = azurerm_user_assigned_identity.cyclecloud_node.id
+    vm_image            = var.cyclecloud_vm_image
     # When subscription/account is created.  A locker is created with name "<subscription>-storage"
     cyclecloud_locker = "${var.cyclecloud_subscription_name}-storage"
   })

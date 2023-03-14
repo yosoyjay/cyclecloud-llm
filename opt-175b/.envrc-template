@@ -1,4 +1,4 @@
-export NCCL_TOPO_FILE=/opt/microsoft/ndv4-topo.xml
+export NCCL_TOPO_FILE=/opt/ndv4-topo.xml
 export NCCL_IB_PCI_RELAXED_ORDERING=1
 export UCX_IB_PCI_RELAXED_ORDERING=on
 export NCCL_SOCKET_IFNAME=eth0

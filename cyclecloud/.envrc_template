@@ -20,7 +20,7 @@ export TF_VAR_cyclecloud_subnet="subnet-name"
 # Use CIDR notation, must be within vnet address space
 export TF_VAR_cyclecloud_subnet_address_prefix="10.50.0.0/24"
 export TF_VAR_cyclecloud_admin_name="cyclecloud-admin-username"
-# Must be at least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+# Must be at least 8 characters, and have three of the following: 1 uppercase, 1 lowercase, 1 number, 1 special character
 export TF_VAR_cyclecloud_admin_password="ccAdmin!23"
 # Path to user-data template used for cloud-init
 export TF_VAR_cyclecloud_user_data="user-data.yaml.tpl"

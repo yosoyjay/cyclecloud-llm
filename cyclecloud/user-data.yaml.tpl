@@ -30,8 +30,6 @@ packages:
   - python3.8-venv
   # Will "install" (download package), but will not be operational.  See runcmd.
   - cyclecloud8
-  # Needed for PMIx
-  - libevent-dev
 
 runcmd:
   #
@@ -54,19 +52,11 @@ runcmd:
   # Import slurm cluster into CyleCloud
   # - Assume files have been copied to /home/${cyclecloud_admin_name}/{cyclecloud-projects, slurm}
   # Upload projects to CycleCloud "locker".  These will be used to configure nodes in the cluster.
-  - for proj in /home/${cyclecloud_admin_name}/cyclecloud-projects/cc_*; do cd $proj; /usr/local/bin/cyclecloud project upload ${cyclecloud_subscription_name}-storage --config /home/${cyclecloud_admin_name}/.cycle/config.ini; done
+  - for proj in /home/${cyclecloud_admin_name}/cyclecloud-projects/cc_*; do cd $proj; echo $proj; /usr/local/bin/cyclecloud project upload ${cyclecloud_subscription_name}-storage --config /home/${cyclecloud_admin_name}/.cycle/config.ini; done
   # Copy Slurm config so CycleCloud is aware of it
   - cp /home/${cyclecloud_admin_name}/slurm/slurm-*.txt /opt/cycle_server/config/data
   # Import Slurm config to create cluster in CycleCloud
-  - /usr/local/bin/cyclecloud import_cluster Slurm -f /home/${cyclecloud_admin_name}/slurm/slurm.txt -p /home/${cyclecloud_admin_name}/slurm/slurm.json --config /home/${cyclecloud_admin_name}/.cycle/config.ini
-  #
-  # Install PMIx - This specific version from Azure/azurehpc works with no issues
-  #
-  - mkdir -p /opt/pmix/v3
-  - wget https://raw.githubusercontent.com/Azure/azurehpc/master/experimental/deploy_cycle_slurm_ndv4/scripts/openpmix-3.1.6.tar.gz -O /opt/pmix/openpmix-3.1.6.tar.gz
-  - tar xzf /opt/pmix/openpmix-3.1.6.tar.gz --directory=/opt/pmix
-  - cd /opt/pmix/openpmix-3.1.6; ./autogen.sh; ./configure --prefix=/opt/pmix/v3; make -j install > /opt/pmix/openpmix-3.1.6._install.log
-
+  - /usr/local/bin/cyclecloud import_cluster slurm -f /home/${cyclecloud_admin_name}/slurm/slurm.txt -p /home/${cyclecloud_admin_name}/slurm/slurm.json --config /home/${cyclecloud_admin_name}/.cycle/config.ini
 
 write_files:
   - path: /opt/cycle_server/config/java_home
