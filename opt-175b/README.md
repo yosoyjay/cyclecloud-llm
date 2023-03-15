@@ -1,53 +1,63 @@
 # Benchmark OPT-175B
 
-Scripts to benchmark training of OPT-175B on a CycleCloud SLURM cluster.
+Steps to benchmark training of OPT-175B on a Slurm cluster.
 
 ## Prerequisites
 
-- An appropriate VM, or
-- A CycleCloud SLURM cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4)
+- A Slurm cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4)
 
 ## Running the benchmark
 
-### 0. [If on a SLURM cluster] Connect to the worker node
+### 0.  Connect to the scheduler, or login node if enabled
 
- ssh <private-ip>
- cyclecloud connect <node-name> -c <cluster-name>
+```bash
+ssh <username>@<scheduler>
+```
 
 ### 1. Install software requirements
 
 #### 1a. Python environment
 
-The benchmark is run on bare metal in a conda virtual environment.
+This benchmark is run on bare metal in a conda virtual environment following the instructions in the [Metaseq README](https://github.com/facebookresearch/metaseq/blob/main/docs/setup.md).
 
-Install conda (here I use micromamba which has a superior dependency resolver compared to the default one provided by conda):
+Install Python environemnt for this purpose using miniconda:
 
 ```bash
-curl micro.mamba.pm/install.sh | bash
+curl -fsO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+$HOME/miniconda/bin/conda init
 ```
 
 Create and activate conda environment:
 
 ```bash
-source /shared/home/hpcadmin/.bashrc
-micromamba create -y -c conda-forge --name fairseq python=3.9
-micromamba activate fairseq
+source $HOME/.bashrc
+conda create -y -c conda-forge --name fairseq python=3.9
+conda activate fairseq
 ```
 
-Install prereqs with `pip` !?!?
+Install the prerequisites, yes, via `pip`:
+
+The the version of torch specified in the requirements should match the CUDA version of the VM.  Check CUDA version with `nvcc --version` and then install the appropriate version of torch, e.g.:
+CUDA 11.6 -> torch==1.10.0+cu116.  Note that PyTorch packaged for CUDA 11.3 works with CUDA 11.4 (the version shipped with Ubuntu 18.04 HPC images), see [Github issue](https://github.com/pytorch/pytorch/issues/75992)]
 
 ```bash
-pip install -r requirements.txt
+
+```bash
+pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
 #### 1b. NVIDIA Apex
 
-Install Apex for utilities for mixed precision and distributed training optimizations.
+Install the Apex extension to PyTorch to enable mixed precision and distributed training optimizations.
+
+In some cases, as in when VM CUDA version is 11.4 and PyTorch is 1.10.0+cu113, one must disable a check in the Apex setup script.  This is currently done by removing the line in the `setup.py` file as done with
+the `sed` command below.
 
 ```bash
 git clone https://github.com/NVIDIA/apex
 pushd apex
-sed -i "s/(bare_metal_major != torch_binary_major) or (bare_metal_minor != torch_binary_minor)/False/g" setup.py
+sed -i "s/check_cuda_torch_binary_vs_bare_metal(CUDA_HOME)//g" setup.py
 python -m pip install -v --no-cache-dir --global-option="--cpp_ext" \
     --global-option="--cuda_ext" \
     --global-option="--deprecated_fused_adam" \
@@ -58,29 +68,20 @@ popd
 
 #### 1c. Install Megatron
 
-Install Megatron fork (why?):
+Install Megatron fork as specified in the aforementioned README.
 
 ```bash
 git clone https://github.com/ngoyal2707/Megatron-LM.git
 pushd Megatron-LM
-git checkout fairseq_v2
-pip install -e
+git checkout fairseq_v3
+pip install -e .
 popd
 ```
 
-#### 1d. Install NCCL
+#### 1e. Load NCCL environmental variables tuned for optimized distributed training
 
 ```bash
-git clone https://github.com/NVIDIA/nccl.git
-pushd nccl
-make clean && make -j src.build
-popd
-```
-
-#### 1e. Load environmental variables
-
-```bash
-source envrc
+source nccl-env-var.sh
 ```
 
 #### 1f. Install Metaseq
@@ -90,7 +91,6 @@ Ensure version includes commit a1a4e733.
 ```bash
 git clone https://github.com/facebookresearch/metaseq.git
 pushd metaseq
-git log | grep "a1a4e733"
 python setup.py build_ext --inplace
 pip install -e .
 popd
@@ -103,12 +103,12 @@ Note, this install via pip is not editable (i.e. no `-e`) as the `metaseq/train.
 ```bash
 git clone https://github.com/facebookresearch/fairscale.git
 pushd fairscale
-git checkout fixing_memory_issues_with_keeping_overla
+git checkout fixing_memory_issues_with_keeping_overlap
 pip install .
 popd
 ```
 
-### 2. Run benchmark
+### 2. Run benchmark with synthetic data
 
 Ensure Python environment is activated, e.g.:
 
@@ -122,10 +122,10 @@ If on a stand-alone VM:
 time opt-baselines --model-size 125m --benchmark -t 1 -g 8 -n 128 -p test-125m --local --azure
 ```
 
-If on the SLURM log-in node:
+If on the Slurm scheduler or log-in node:
 
 ```bash
 time opt-baselines --model-size 125m --benchmark -t 1 -g 8 -n 128 -p test-125m --local --azure
 ```
 
-On a single instance of a signle Standard_ND96amsr_A100_v4 VM this took ~2.5 minutes with WPS of at least 200K.
+On a single instance of a single Standard_ND96amsr_A100_v4 (8 x 80GB SMX A100) VM this took ~2.5 minutes with training words per seconds of at least 200K.
