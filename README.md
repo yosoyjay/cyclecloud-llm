@@ -113,8 +113,10 @@ Running NCCL tests with Slurm and containers on NP processors:
 $ sbatch -N $NP all-reduce-containers.sh
 ```
 
-A well running cluster should have a bandwidth of 180 GB/s or more for two or more nodes.
+A well running cluster should have a bandwidth of 185 GB/s or more for two or more nodes.
 
 ## Benchmarking / training a Language Language Model (OPT-175B, as an example)
 
 As an example, we'll benchmark a smaller 175M parameter version of a 175B parameter LLM on 16 A100 GPUs using [Metaseq](https://github.com/facebookresearch/metaseq) and following the directions in the [Metaseq README](https://github.com/facebookresearch/metaseq/blob/main/docs/setup.md).
+
+Details for setup and running the benchmark are provided in the [opt-175b README](opt-175b/README.md).
