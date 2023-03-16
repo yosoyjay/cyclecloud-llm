@@ -113,7 +113,7 @@ popd
 Ensure Python environment is activated, e.g.:
 
 ```bash
-micromamba activate fairseq
+conda activate fairseq
 ```
 
 If on a stand-alone VM:
@@ -122,10 +122,10 @@ If on a stand-alone VM:
 time opt-baselines --model-size 125m --benchmark -t 1 -g 8 -n 128 -p test-125m --local --azure
 ```
 
-If on the Slurm scheduler or log-in node:
+If on Slurm cluster using *NP* nodes:
 
 ```bash
-time opt-baselines --model-size 125m --benchmark -t 1 -g 8 -n 128 -p test-125m --local --azure
+time opt-baselines --model-size 125m --benchmark -t $NP -g 8 -n 128 -p test-125m --azure
 ```
 
 On a single instance of a single Standard_ND96amsr_A100_v4 (8 x 80GB SMX A100) VM this took ~2.5 minutes with training words per seconds of at least 200K.

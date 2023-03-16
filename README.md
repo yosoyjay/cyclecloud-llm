@@ -74,7 +74,7 @@ In particular, verify the following:
 Then start the cluster by pressing the `Start` button on the `Cluster` page.  You can also start the cluster from the command line on the CycleCloud VM after SSHing to that VM using the following command:
 
 ```bash
-ccadmin@cyclecloud-vm$ cyclecloud cluster start -c Slurm
+ccadmin@cyclecloud-vm$ cyclecloud cluster start -c slurm
 ```
 
 The scheduler node will take a few minutes to start.  The compute nodes will need to be manually started by right-clicking the "hpc" labeled row under "Template" and selecting "Start" from the "Actions" pull-down menu.  Note that provisioning NDv4 VMs can take up to 20 minutes.
@@ -90,8 +90,30 @@ An essential component of training at scale is the ability to monitor and detect
 To verify optimal performance when using distributed training, [NCCL tests](https://github.com/NVIDIA/nccl-tests) can also be run to measure the bandwidth between nodes and GPUs on the cluster.
 Here we use a set of scripts that allow us to verify distributed all-reduce performance on the cluster using scripts from [the azurehpc collection of scripts](https://github.com/Azure/azurehpc/tree/master/experimental/run_nccl_tests_ndv4).
 
-Specifically, you can submit a job to the scheduler to run the NCCL tests without Slurm, using Slurm, and using Slurm with containers.
+Specifically, we can test NCCL tests without Slurm, using Slurm, and using Slurm with containers.
 
+Running NCCL tests without Slurm, you need to SSH to a compute node and run the following commands from `nccl-tests` directory:
+
+```bash
+# to test on two nodes (16 GPUs)
+$ all-reduce.sh 16 hostfiles.txt
+```
+
+A convenience script `make-hostfile.py` is provided to create a hostfile from output of `sinfo`.
+
+Running NCCL tests with Slurm on NP processors:
+
+```bash
+$ sbatch -N $NP all-reduce.sh
+```
+
+Running NCCL tests with Slurm and containers on NP processors:
+
+```bash
+$ sbatch -N $NP all-reduce-containers.sh
+```
+
+A well running cluster should have a bandwidth of 180 GB/s or more for two or more nodes.
 
 ## Benchmarking / training a Language Language Model (OPT-175B, as an example)
 
