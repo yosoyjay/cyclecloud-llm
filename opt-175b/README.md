@@ -4,7 +4,7 @@ Steps to benchmark training of OPT-175B on a Slurm cluster.
 
 ## Prerequisites
 
-- A Slurm cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4)
+- A Slurm cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4).
 
 ## Running the benchmark
 

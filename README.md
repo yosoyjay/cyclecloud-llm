@@ -1,4 +1,4 @@
-# Training LLM on Azure using CycleCloud + Slurm
+# Training LLM (or, any large scale model) on Azure using CycleCloud + Slurm
 
 This repo contains the essential scripts, configurations, and instructions required to train a language language model (LLM) on Azure using CycleCloud to deploy a Slurm cluster comprised of NDv4 VMs each of which are are equipped with 8 A100 (40 GB or 80 GB) GPUs, 8 HDR InfiniBand 200 Gbps network cards, 96 vCPUs, at least 900 GB of memory, and at least 6 TB of local NVMe SSD storage.
 Details of the hardware details for [NDasrA100](https://learn.microsoft.com/en-us/azure/virtual-machines/nda100-v4-series) and [NDm_A100](https://learn.microsoft.com/en-us/azure/virtual-machines/ndm-a100-v4-series) VMs are available on [Microsoft Azure Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/).
@@ -27,7 +27,7 @@ Use of this repo requires the following:
 - [Azure CLI installed on your local machine](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Terraform authenticated to your Azure subscription (See [Hashicorp docs](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build) or [Microsoft docs](https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure#configure-in-azure-cloud-shell-with-bash))
 
-## Deployment
+## Provision and configure infrastructure
 
 ### Deploy CycleCloud
 
@@ -77,9 +77,22 @@ Then start the cluster by pressing the `Start` button on the `Cluster` page.  Yo
 ccadmin@cyclecloud-vm$ cyclecloud cluster start -c Slurm
 ```
 
-The scheduler node will take a few minutes to start.  The compute nodes will need to be manually started by right-clicking the "hpc" labeled row under "Template" and selecting "Start" from the "Actions" pull-down menu.  Note that provisioning NDv$ VMs can take up to 20 minutes.
+The scheduler node will take a few minutes to start.  The compute nodes will need to be manually started by right-clicking the "hpc" labeled row under "Template" and selecting "Start" from the "Actions" pull-down menu.  Note that provisioning NDv4 VMs can take up to 20 minutes.
+
+### Verify cluster performance
+
+An essential component of training at scale is the ability to monitor and detect hardware issues.  To verify that the cluster is configured and operating as expected, [Node Health Checks](https://github.com/mej/nhc) are deployed and configured as part of the CycleCloud deployment.  Included in this are checks on each node for:
+- disk issues
+- IB network issues
+- NCCL bandwidth issues
+- GPU issues
+
+To verify optimal performance when using distributed training, [NCCL tests](https://github.com/NVIDIA/nccl-tests) can also be run to measure the bandwidth between nodes and GPUs on the cluster.
+Here we use a set of scripts that allow us to verify distributed all-reduce performance on the cluster using scripts from [the azurehpc collection of scripts](https://github.com/Azure/azurehpc/tree/master/experimental/run_nccl_tests_ndv4).
+
+Specifically, you can submit a job to the scheduler to run the NCCL tests without Slurm, using Slurm, and using Slurm with containers.
 
 
-## Training a Language Language Model (OPT-175B, as an example)
+## Benchmarking / training a Language Language Model (OPT-175B, as an example)
 
-As an example, we'll train a 175B parameter LLM on 16 A100 GPUs using [Metaseq](https://github.com/facebookresearch/metaseq) and following the directions in the [Metaseq README](https://github.com/facebookresearch/metaseq/blob/main/docs/setup.md).
+As an example, we'll benchmark a smaller 175M parameter version of a 175B parameter LLM on 16 A100 GPUs using [Metaseq](https://github.com/facebookresearch/metaseq) and following the directions in the [Metaseq README](https://github.com/facebookresearch/metaseq/blob/main/docs/setup.md).
