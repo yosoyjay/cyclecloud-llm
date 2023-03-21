@@ -2,7 +2,7 @@
 
 This document describes the steps to prepare an environment and to benchmark the training of an OPT-175B model on a Slurm cluster deployed on Azure.
 
-These directions assume taht a a Slurm cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4) has already been provisioned (See [README.md](../README.md) for details).
+These directions assume that a a Slurm cluster with the appropriate VM (e.g. Standard_ND96amsr_A100_v4) has already been provisioned (See [README.md](../README.md) for details).
 
 # Preparing the environment
 
@@ -22,7 +22,7 @@ $ slogin <node-name>
 
 This benchmark is run on bare metal in a conda virtual environment following the instructions in the [Metaseq README](https://github.com/facebookresearch/metaseq/blob/main/docs/setup.md).
 
-Install Python environemnt for this purpose using miniconda:
+Install Python enviroment for this purpose using miniconda:
 
 ```bash
 $ curl -fsO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -114,7 +114,7 @@ Ensure Python environment is activated, e.g.:
 $ conda activate fairseq
 ```
 
-Ensure that environmental variables are properly set for optimal perfomance:
+Ensure that environmental variables are properly set for optimal performance:
 
 ```bash
 $ source nccl-env-var.sh

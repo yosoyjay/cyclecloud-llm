@@ -41,3 +41,4 @@ terraform.rc
 
 # Ignore .envrc files
 .envrc
+set-env.sh

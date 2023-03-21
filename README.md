@@ -1,7 +1,11 @@
 # Training LLM (or, any large scale model) on Azure using CycleCloud + Slurm
 
-This repo contains the essential scripts, configurations, and instructions required to train a language language model (LLM) on Azure using CycleCloud to deploy a Slurm cluster comprised of NDv4 VMs each of which are are equipped with 8 A100 (40 GB or 80 GB) GPUs, 8 HDR InfiniBand 200 Gbps network cards, 96 vCPUs, at least 900 GB of memory, and at least 6 TB of local NVMe SSD storage.
-Details of the hardware details for [NDasrA100](https://learn.microsoft.com/en-us/azure/virtual-machines/nda100-v4-series) and [NDm_A100](https://learn.microsoft.com/en-us/azure/virtual-machines/ndm-a100-v4-series) VMs are available on [Microsoft Azure Documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/).
+This repo contains the essential scripts, configurations, and instructions required to train a language language model (LLM) on Azure using CycleCloud to deploy a GPU (e.g. A100 or H100) cluster managed by Slurm.
+
+Hardware details for the VMs appropriate for this deployment are available on [Microsoft Azure Documentation]:
+- [NDasrA100](https://learn.microsoft.com/en-us/azure/virtual-machines/nda100-v4-series)
+- [NDm_A100](https://learn.microsoft.com/en-us/azure/virtual-machines/ndm-a100-v4-series)
+- [NDv5 (H100)](https://azure.microsoft.com/en-in/blog/azure-previews-powerful-and-scalable-virtual-machine-to-help-customers-accelerate-ai/)
 
 The deployment and configuration of the cluster shown here is similar to those used to deploy and train O(100B++) parameter foundational LLMs on O(1K) GPUs, but is generally applicable for any AI workload using batch scheduling.
 
