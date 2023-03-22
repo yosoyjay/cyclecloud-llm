@@ -37,24 +37,34 @@ Use of this repo requires the following:
 
 The deployment of CycleCloud is done using Terraform and is configured using environmental variables described `variables.tf`.  The variables without default values must be set and a template is provided in the file `.envrc.template` which can be copied to to `.envrc` to be used with [direnv](https://direnv.net/), or manually sourced (i.e. `source .envrc`).  Note, `.envrc` is listed in the `.gitignore` file so it will not be accidentally committed.
 
-After the required environmental variables are set, the deployment can be done by running the following commands:
+This deployment assumes that there is an existing virtual network and virtual network that can be peered to to avoid using public IPs.
+
+Once the required environmental variables are set, the deployment can be done by running the following commands:
 
 ```bash
 $ terraform init
-$ terraform plan -out=plan.out
-$ terraform apply plan.out
+$ terraform plan -out=plan-main.out
+$ terraform apply plan-main.out
+```
+This will provision:
+- A resource group
+- A virtual network and default subnet peered to the specified existing virtual network with a virtual network gateway
+- A storage account and container configured to work with CycleCloud (without hierarchical namespace) and access to your local machine and the newly provisioned virtual network
+- A user managed identity with the role of `Contributor` on the resource group which will be assigned to compute nodes to allow them to access the storage account or other Azure resources
+
+Once that has completed, connect to the existing virtual network gateway (VPN), even if you were connected before, and deploy the CycleCloud VM by running the following commands:
+
+```bash
+$ terraform plan -out=plan-vm.out -var "create_cyclecloud_vm=true"
+$ terraform apply plan-vm.out
 ```
 
 This will provision:
-- A resource group
-- A virtual network and default subnet
-- A storage account and container configured to work with CycleCloud (without hierarchical namespace) and access to your local machine and the newly provisioned virtual network
-- A user managed identity with the role of `Contributor` on the resource group which will be assigned to compute nodes to allow them to access the storage account or other Azure resources
 - A VM with CycleCloud installed which will provide administrative access through a web browser and SSH
 
 ### Start the Slurm cluster
 
-Once the CycleCloud VM is provisioned, you can login to the CycleCloud web interface at the IP address of the VM using the credentials provided through the environmental variables.  Once logged in, verify the desired configuration of the cluster by pressing the `Edit` button on the `Cluster` page.
+Once the CycleCloud VM is provisioned, you can login to the CycleCloud web interface at the IP address (e.g. 10.50.0.4:8080) of the VM using the credentials provided through the environmental variables and will be output at the end of the VM provisioning logs.  Once logged in, verify the desired configuration of the cluster by pressing the `Edit` button on the `Cluster` page.
 
 In particular, verify the following:
 

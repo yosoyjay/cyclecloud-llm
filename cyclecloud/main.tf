@@ -50,6 +50,27 @@ resource "azurerm_subnet" "subnet" {
   service_endpoints    = ["Microsoft.Storage"]
 }
 
+data "azurerm_virtual_network" "existing_vnet" {
+  name                = var.existing_vnet
+  resource_group_name = var.existing_vnet_rg
+}
+
+resource "azurerm_virtual_network_peering" "cyclecloud_to_existing" {
+  name                      = "cc-to-${var.cyclecloud_vnet}"
+  resource_group_name       = azurerm_resource_group.rg.name
+  virtual_network_name      = azurerm_virtual_network.vnet.name
+  remote_virtual_network_id = data.azurerm_virtual_network.existing_vnet.id
+  use_remote_gateways       = true
+}
+
+resource "azurerm_virtual_network_peering" "existing_to_cyclecloud" {
+  name                      = "${var.cyclecloud_vnet}-to-cc"
+  resource_group_name       = var.existing_vnet_rg
+  virtual_network_name      = var.existing_vnet
+  remote_virtual_network_id = azurerm_virtual_network.vnet.id
+  allow_gateway_transit     = true
+}
+
 #
 # Storage - Must not be hierarchical namespace enabled to work with CycleCloud
 #
@@ -77,40 +98,6 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "private"
 }
 
-data "azurerm_storage_account_sas" "cyclecloud" {
-  connection_string = azurerm_storage_account.storage.primary_connection_string
-  https_only        = true
-  signed_version    = "2017-07-29"
-
-  resource_types {
-    service   = true
-    container = true
-    object    = false
-  }
-
-  services {
-    blob  = true
-    queue = false
-    table = false
-    file  = false
-  }
-
-  start  = "2023-01-01"
-  expiry = "2024-01-01"
-
-  permissions {
-    read    = true
-    write   = false
-    delete  = false
-    list    = true
-    add     = false
-    create  = false
-    update  = false
-    process = false
-    tag     = false
-    filter  = false
-  }
-}
 
 #
 # SSH public key
@@ -129,11 +116,4 @@ resource "azurerm_user_assigned_identity" "cyclecloud_node" {
   name                = "cyclecloud-node"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_role_assignment" "cyclecloud_node" {
-  scope                = azurerm_resource_group.rg.id
-  role_definition_name = "Contributor"
-
-  principal_id = azurerm_user_assigned_identity.cyclecloud_node.principal_id
 }

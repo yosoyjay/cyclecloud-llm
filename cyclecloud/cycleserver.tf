@@ -58,6 +58,7 @@ resource "azurerm_network_interface" "cyclecloud_nic" {
 }
 
 resource "azurerm_virtual_machine" "cyclecloud_vm" {
+  count               = var.create_cyclecloud_vm == true ? 1 : 0
   name                = var.cyclecloud_vm_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -114,9 +115,14 @@ resource "azurerm_virtual_machine" "cyclecloud_vm" {
 }
 
 resource "azurerm_role_assignment" "cyclecloud_contributor" {
+  count                = var.create_cyclecloud_vm == true ? 1 : 0
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Contributor"
 
   # Identities are lists, so index into the first one
-  principal_id = azurerm_virtual_machine.cyclecloud_vm.identity[0].principal_id
+  principal_id = azurerm_virtual_machine.cyclecloud_vm[0].identity[0].principal_id
+}
+
+output "cyclecloud_vm_ip" {
+  value = azurerm_network_interface.cyclecloud_nic.private_ip_address
 }

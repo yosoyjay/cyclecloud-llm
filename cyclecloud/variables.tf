@@ -110,3 +110,19 @@ variable "private_key_path" {
   description = "Path to private key to use for SSH access to VMs"
   type        = string
 }
+
+variable "existing_vnet" {
+  description = "Name of an existing virtual network that will be peered to and used as remote gateway"
+  type        = string
+}
+
+variable "existing_vnet_rg" {
+  description = "Name of the resource group that contains the existing virtual network"
+  type        = string
+}
+
+variable "create_cyclecloud_vm" {
+  description = "Create CycleCloud VM"
+  type        = bool
+  default     = false
+}

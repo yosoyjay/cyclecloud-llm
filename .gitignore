@@ -10,6 +10,7 @@
 
 # plan files
 **/plan.out
+**/*plan.out
 
 # Crash log files
 crash.log
