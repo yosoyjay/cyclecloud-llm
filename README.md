@@ -37,7 +37,7 @@ Use of this repo requires the following:
 
 The deployment of CycleCloud is done using Terraform and is configured using environmental variables described `variables.tf`.  The variables without default values must be set and a template is provided in the file `.envrc.template` which can be copied to to `.envrc` to be used with [direnv](https://direnv.net/), or manually sourced (i.e. `source .envrc`).  Note, `.envrc` is listed in the `.gitignore` file so it will not be accidentally committed.
 
-This deployment assumes that there is an existing virtual network and virtual network that can be peered to to avoid using public IPs.
+This deployment assumes that there is an existing virtual network and virtual network that can be peered to avoid using public IPs.
 
 Once the required environmental variables are set, the deployment can be done by running the following commands:
 
@@ -79,8 +79,8 @@ In particular, verify the following:
     - "Size (GB)" is the desired size of the shared filesystem. This is the total size of the filesystem used for home directories, not the local scratch space on the VMs.
 
 - "Advanced Settings":
-    - "Credentials" is the correct that you provided through the environmental variables
-    - "{Scheduler, Login Cluster, HP Cluster}-init" included appropriate projects.
+    - "Credentials" are the correct and match what you provided through the environmental variables
+    - "{Scheduler, Login Cluster, HP Cluster}-init" include appropriate projects.
         - "cc_misc_ndv4", "cc_slurm_nhc", "cc_slurm_pyxis_enroot" is appropriate for compute VMs
         - "cc_misc_ubuntu" is appropriate for all vms
     - "Public Head Node" - check if public IP is for scheduler is desired
