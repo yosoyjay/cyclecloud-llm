@@ -115,16 +115,16 @@ $ all-reduce.sh 16 hostfiles.txt
 
 A convenience script `make-hostfile.py` is provided to create a hostfile from output of `sinfo`.
 
-Running NCCL tests with Slurm on NP processors:
+Running NCCL tests with Slurm on N nodes (e.g. `-N 2` to use 16 total GPUs):
 
 ```bash
-$ sbatch -N $NP all-reduce.sh
+$ sbatch -N $N all-reduce.sh
 ```
 
-Running NCCL tests with Slurm and containers on NP processors:
+Running NCCL tests with Slurm and containers on N nodes:
 
 ```bash
-$ sbatch -N $NP all-reduce-containers.sh
+$ sbatch -N $N all-reduce-containers.sh
 ```
 
 A well running cluster should have a bandwidth of 185 GB/s or more for two or more nodes.

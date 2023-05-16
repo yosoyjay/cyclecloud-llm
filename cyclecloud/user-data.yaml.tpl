@@ -28,15 +28,20 @@ package_update: true
 packages:
   # Needed for CycleCloud CLI.  Must specify python3.8-venv, python3-venv does not work.
   - python3.8-venv
+  # These are needed, but failing when installing here.  See runcmd.
+  #- openjdk-8-jdk
   # Will "install" (download package), but will not be operational.  See runcmd.
-  - cyclecloud8
+  # Tested with this specific version
+  #- cyclecloud8=8.3.0-3062
 
 runcmd:
   #
   # Install CycleCloud
   #
-  # Manually install CycleCloud as it will fail during install due to Java 11 being installed as default
+  # Manually install CycleCloud as it will fail during install due to Java 11 being installed as default and not working with apt
+  - apt-get install -yq openjdk-8-jdk
   - update-java-alternatives -s java-1.8.0-openjdk-amd64
+  - apt-get install -yq cyclecloud8=8.3.0-3062
   # Find temp install dir. I've found it to be 490f4cc0-d326-4f4b-b48e-26e6320f3acb, but including to avoid brittleness
   # Because /opt/cycle_server/config/ already exists, you need to force install
   - bash `find /opt/cycle_server/.installer -maxdepth 1 -type d | grep '/opt/cycle_server/.installer/'`/install.sh --force
@@ -52,7 +57,7 @@ runcmd:
   # Import slurm cluster into CyleCloud
   # - Assume files have been copied to /home/${cyclecloud_admin_name}/{cyclecloud-projects, slurm}
   # Upload projects to CycleCloud "locker".  These will be used to configure nodes in the cluster.
-  - for proj in /home/${cyclecloud_admin_name}/cyclecloud-projects/cc_*; do cd $proj; echo $proj; /usr/local/bin/cyclecloud project upload ${cyclecloud_subscription_name}-storage --config /home/${cyclecloud_admin_name}/.cycle/config.ini; done
+  - for proj in /home/${cyclecloud_admin_name}/cyclecloud-projects/cc_*; do cd $proj; echo $proj; /usr/local/bin/cyclecloud project upload '${cyclecloud_subscription_name}-storage' --config /home/${cyclecloud_admin_name}/.cycle/config.ini; done
   # Copy Slurm config so CycleCloud is aware of it
   - cp /home/${cyclecloud_admin_name}/slurm/slurm-*.txt /opt/cycle_server/config/data
   # Import Slurm config to create cluster in CycleCloud
