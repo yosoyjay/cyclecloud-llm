@@ -84,18 +84,19 @@ function update_slurm_prolog_epilog() {
 
    prolog_epilog=$1
    script=$2
+   mkdir -p /sched/scripts
    grep -qi /sched/scripts/${prolog_epilog}.sh $SLURM_CONF
    prolog_epilog_does_not_exist=$?
-   cp $CYCLECLOUD_SPEC_PATH/files/$script /sched/scripts
+   cp $CYCLECLOUD_SPEC_PATH/files/$script /sched/scripts/$script
    chmod +x /sched/scripts/$script
    if [[ $prolog_epilog_does_not_exist == 1 ]]; then
       if [[ $prolog_epilog == "prolog" ]]; then
-         cp $CYCLECLOUD_SPEC_PATH/files/prolog.sh /sched/scripts
+         cp $CYCLECLOUD_SPEC_PATH/files/prolog.sh /sched/scripts/prolog.sh
          chmod +x /sched/scripts/prolog.sh
          echo "Prolog=/sched/scripts/prolog.sh" >> $SLURM_CONF
          echo "PrologFlags=Alloc" >> $SLURM_CONF
       elif [[ $prolog_epilog == "epilog" ]]; then
-         cp $CYCLECLOUD_SPEC_PATH/files/epilog.sh /sched/scripts
+         cp $CYCLECLOUD_SPEC_PATH/files/epilog.sh /sched/scripts/epilog.sh
          chmod +x /sched/scripts/epilog.sh
          echo "Epilog=/sched/scripts/epilog.sh" >> $SLURM_CONF
       fi
