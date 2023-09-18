@@ -54,6 +54,7 @@ runcmd:
   # Must run as user or CycleCloud will attempt to install in /root/.cycle
   - runuser -l ${cyclecloud_admin_name} -c "$cmd"
   - runuser -l ${cyclecloud_admin_name} -c '/usr/local/bin/cyclecloud account create -f /opt/cycle_server/azure_subscription.json'
+  - rm -f /opt/cycle_server/config/data/cyclecloud_account.json.imported
   # Import slurm cluster into CyleCloud
   # - Assume files have been copied to /home/${cyclecloud_admin_name}/{cyclecloud-projects, slurm}
   # Upload projects to CycleCloud "locker".  These will be used to configure nodes in the cluster.
