@@ -109,7 +109,7 @@ write_files:
         "Location": "${cyclecloud_location}",
         "Name": "${cyclecloud_subscription_name}",
         "Provider": "azure",
-        "ProviderId": "fd6abe95-c55e-44c8-9085-68002a27c1bb",
+        "ProviderId": "${azure_subscription_id}",
         "RMStorageAccount": "${cyclecloud_storage_account}",
         "RMStorageContainer": "${cyclecloud_storage_container}",
         "AcceptMarketplaceTerms": true
