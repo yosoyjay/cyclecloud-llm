@@ -8,7 +8,7 @@
   "NodeNameIsHostname" : true,
   "NodeNamePrefix" : "Cluster Prefix",
   "ReturnProxy" : false,
-  "ManagedServiceIdentity": "/subscriptions/f5a67d06-2d09-4090-91cc-e3298907a021/resourceGroups/jesse-cyclecloud/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cyclecloud-node",
+  "ManagedServiceIdentity": "/subscriptions/xyz/resourceGroups/jesse-cyclecloud/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cyclecloud-node",
   "SchedulerMachineType" : "Standard_D32as_v4",
   "SchedulerImageName" : "microsoft-dsvm:ubuntu-hpc:2004:20.04.2022121201",
   "SchedulerHostName" : "Cluster Prefix",
